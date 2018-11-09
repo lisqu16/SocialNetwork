@@ -4,7 +4,12 @@ if(isset($_COOKIE["user"])) {
     if(isset($_GET["text"])) {
         $text = $_GET["text"];
     }
+  	$postid = file_get_contents("postidcount.txt");
+  	$thispostid = ($postid + 1);
     $beforesubmit = file_get_contents("posts.html");
+  	$submitpostid = fopen("postidcount.txt", "w");
+  	fwrite($submitpostid, $thispostid);
+  	fclose($submitpostid);
     $submitting = fopen("posts.html", "w");
     $ak = $_COOKIE["user"];
     $layer1= base64_decode($ak);
@@ -14,9 +19,13 @@ if(isset($_COOKIE["user"])) {
     $layer5= base64_decode($layer4);
     $layer6= base64_decode($layer5);
     fwrite($submitting, "<center><h2>" . $layer6 . ": " . $text . "</center><br><br>" . $beforesubmit);
-    echo "<meta http-equiv='refresh' content='0; url=index.html'>";
+  fclose($submitting);
+  $separateidpost = fopen("post-" . $thispostid . ".txt", "w");
+  fwrite($separateidpost, $layer6 . ": " . $text);
+  fclose($separateidpost);
+   echo "<meta http-equiv='refresh' content='0; url=index.html'>";
 } else {
     // This will occur when user isn't logged in.
-    echo "You are not logged in! You can't post messages! (If you want to, create a free account)";
+    echo "<meta http-equiv='refresh' content='0; url=noaccount.html'>";
 }
 ?>
