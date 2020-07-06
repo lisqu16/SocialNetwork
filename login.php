@@ -45,9 +45,9 @@ if(file_exists("users/" . $login . "/password.txt")) {
 
     // get info from the login form
     $login = htmlentities($_POST['login'], ENT_QUOTES, "UTF-8");
-    $password = htmlentities($_POST['password'], ENT_QUOTES, "UTF-8");
+    $password = $_POST['password'];
 
-    $result = @$connection->query(sprintf("SELECT * FROM users WHERE user='%s' AND pass='%s'", mysqli_real_escape_string($connection, $login), mysqli_real_escape_string($connection, $password)));
+    $result = @$connection->query(sprintf("SELECT * FROM users WHERE user='%s'", mysqli_real_escape_string($connection, $login)));
     
     // if an error occurred during the query, inform user
     if (!($result)) {
@@ -64,8 +64,17 @@ if(file_exists("users/" . $login . "/password.txt")) {
         return;
     }
 
-    // valid login and password! hurray!
+    // downloading info about user
     $user_info = $result->fetch_assoc();
+
+    // checking password
+    if (!(password_verify($password, $user_info['pass']))) {
+        echo "Incorrect login or password!";
+        $connection->close();
+        return;
+    }
+
+    // valid login and password! hurray!
     $_SESSION['logged'] = true;
     $_SESSION['user'] = $user_info['user'];
     $_SESSION['name'] = $user_info['name'];
