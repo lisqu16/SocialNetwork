@@ -41,7 +41,7 @@
                 if (!(isset($_SESSION['name']))) {
                     echo "<p>Hi Guest!<p> <br /> <a href=\"./log_in.php\">Login here!</a>";
                 } else {
-                    echo "<p>Hi ".$_SESSION['name']."!</p>";
+                    echo "<p>Hi ".$_SESSION['name']."!</p> <br /> <a href=\"log_out.php\">Log out</a>";
                 }
             ?>
             <hr>
