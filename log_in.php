@@ -12,10 +12,8 @@
             .header {
                 background-color: #6da5ff;
             }
-            .posttext {
-                width: 400px;
-                height: 100px;
-                text-align: center;
+            .loginbox {
+                width: 10%;
             }
             body {
                 font-family: 'Montserrat', sans-serif;
@@ -29,6 +27,9 @@
                 height: 55%;
                 border-width: 0px;
             }
+            .error {
+                color: red;
+            }
         </style>
     </head>
     <body>
@@ -37,22 +38,18 @@
         </div>
         <br>
         <center>
-            <?php
-                if (!(isset($_SESSION['name']))) {
-                    echo "<p>Hi Guest!<p> <br /> <a href=\"./log_in.php\">Login here!</a>";
-                } else {
-                    echo "<p>Hi ".$_SESSION['name']."!</p>";
-                }
-            ?>
-            <hr>
-            <form action="post.php" method="GET">
-                <input type="text" class="posttext" name="text" placeholder="What's on your mind?" autocorrect=off><br><br>
-                <input type="submit" value="Post" class="postbutton"><br>
+            <form action="login.php" method="POST">
+                <input type="text" class="loginbox" name="login" placeholder="Login" autocorrect=off><br><br>
+                <input type="password" class="loginbox" name="password" placeholder="Password" autocorrect=off><br>
+                <?php
+                    if (isset($_SESSION['error'])) {
+                        echo "<div class=\"error\">".$_SESSION['error']."</div>";
+                    }
+                ?>
+                <br><br>
+                <input type="submit" value="Log in" class="postbutton"><br>
             </form>
-            <hr><br>
-            <p>Newest posts:</p>
-            <br>
-            <iframe src="posts.html" class="posts"></iframe>
+            <a href="register.html">Don't have an account? Create one here.</a>
         </center>
     </body>
 </html>

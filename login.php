@@ -29,7 +29,7 @@ if(file_exists("users/" . $login . "/password.txt")) {
 
     // if user type "login.php" in browser, move him to login page
     if (!(isset($_POST['login'])) || !(isset($_POST['password']))) {
-        header('Location: login.html');
+        header('Location: log_in.php');
     }
 
     require_once "config.php";
@@ -59,8 +59,9 @@ if(file_exists("users/" . $login . "/password.txt")) {
     // incorrect login or password
     $rows = $result->num_rows;
     if (!($rows>0)) {
-        echo "Incorrect login or password!";
+        $_SESSION['error'] = "Incorrect login or password!";
         $connection->close();
+        header('Location: log_in.php');
         return;
     }
 
@@ -84,6 +85,9 @@ if(file_exists("users/" . $login . "/password.txt")) {
 
     // closing a connection
     $connection->close();
+
+    // deleting a error variable
+    unset($_SESSION['error']);
 
     header('Location: index.php');
 
