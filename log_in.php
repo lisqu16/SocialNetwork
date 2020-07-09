@@ -54,7 +54,7 @@
                 <br><br>
                 <input type="submit" value="Log in" class="postbutton"><br>
             </form>
-            <a href="register.html">Don't have an account? Create one here.</a>
+            <a href="register.php">Don't have an account? Create one here.</a>
         </center>
     </body>
 </html>
